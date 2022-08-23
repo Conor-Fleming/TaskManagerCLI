@@ -12,10 +12,7 @@ var version = "v0.0.1"
 var rootCmd = &cobra.Command{
 	Use:     "task",
 	Version: version,
-	Short:   "Task is a CLI to help you manage tasks",
-	Long: `A helpful CLI taks manager built with you in mind.
-
-Task will help with adding, completing, and remembering your tasks.`,
+	Short:   "\nTask is a CLI to help you manage tasks",
 }
 
 func Execute() {
