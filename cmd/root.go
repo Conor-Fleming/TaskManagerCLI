@@ -1,4 +1,4 @@
-package task
+package cmd
 
 import (
 	"fmt"
@@ -7,14 +7,15 @@ import (
 	"github.com/spf13/cobra"
 )
 
+var version = "v0.0.1"
+
 var rootCmd = &cobra.Command{
-	Use:   "task",
-	Short: "Task is a CLI to help you manage tasks",
+	Use:     "task",
+	Version: version,
+	Short:   "Task is a CLI to help you manage tasks",
 	Long: `A helpful CLI taks manager built with you in mind.
-				task will help with adding, completing, and remembering your tasks.`,
-	Run: func(cmd *cobra.Command, args []string) {
-		//do stuff
-	},
+
+Task will help with adding, completing, and remembering your tasks.`,
 }
 
 func Execute() {
