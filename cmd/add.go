@@ -14,6 +14,7 @@ var addCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		task := strings.Join(args, " ")
 		fmt.Printf("Placeholder add command called, \"%s\" was added to your list.", task)
+
 	},
 }
 
