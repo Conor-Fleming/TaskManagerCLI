@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/spf13/cobra"
 )
@@ -11,7 +12,8 @@ var doneCmd = &cobra.Command{
 	Use:   "done",
 	Short: "Use done to mark a task as complete and remove from the list",
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("a temp done command has been called")
+		done := strings.Join(args, " ")
+		fmt.Printf("Done command has been called, \"%s\" will be removed from the list", done)
 	},
 }
 
