@@ -1,27 +1,32 @@
-package db
+package database
 
 import (
-	"fmt"
-	"log"
 	"time"
 
 	"github.com/boltdb/bolt"
 )
 
-func Init() {
+var taskBucket = []byte("tasks")
+
+var db *bolt.DB
+
+type Task struct {
+	Key   int
+	Value string
+}
+
+func Init(dbPath string) error {
 	//connecting to DB, using timeout option to prevent hanging
 	db, err := bolt.Open("tasks.db", 0600, &bolt.Options{Timeout: 1 * time.Second})
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 	defer db.Close()
 
-	db.Update(func(tx *bolt.Tx) error {
-		b, err := tx.CreateBucketIfNotExists([]byte("TODOs"))
-		if err != nil {
-			return fmt.Errorf("create bucket: %s", err)
-		}
-		return b.Put([]byte("task-1"), []byte("Testing DB"))
-	})
+	fn := func(tx *bolt.Tx) error {
+		_, err := tx.CreateBucketIfNotExists(taskBucket)
+		return err
+	}
 
+	return db.Update(fn)
 }
