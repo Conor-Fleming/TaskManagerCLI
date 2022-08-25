@@ -16,8 +16,8 @@ type Task struct {
 }
 
 func Init(dbPath string) error {
-	//connecting to DB, using timeout option to prevent hanging
-	db, err := bolt.Open("tasks.db", 0600, &bolt.Options{Timeout: 1 * time.Second})
+	var err error
+	db, err = bolt.Open("tasks.db", 0600, &bolt.Options{Timeout: 1 * time.Second})
 	if err != nil {
 		return err
 	}
@@ -27,6 +27,28 @@ func Init(dbPath string) error {
 		_, err := tx.CreateBucketIfNotExists(taskBucket)
 		return err
 	}
-
 	return db.Update(fn)
 }
+
+func CreateTask(task *Task) (int, error) {
+	err := db.Update(func(tx *bolt.Tx) error {
+		b := tx.Bucket(taskBucket)
+
+		//Generating the key for the user
+		key, _ := b.NextSequence()
+		task.Key = int(key)
+
+		return b.Put([]byte(task.Key), []byte(task))
+	})
+	if err != nil {
+		return 0, err
+	}
+	return 0, nil
+}
+
+/*
+func ViewList() {
+	db.View(func(tx *bolt.Tx) error {
+		b := tx.Bucket(taskBucket)
+	})
+}*/
