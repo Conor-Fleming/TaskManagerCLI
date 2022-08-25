@@ -9,6 +9,7 @@ import (
 
 var (
 	version = "v0.0.1"
+	//no run command in cobra package defaults to displaying help text when rootCmd is called
 	rootCmd = &cobra.Command{
 		Use:     "task",
 		Version: version,
