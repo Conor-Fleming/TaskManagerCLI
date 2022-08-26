@@ -23,12 +23,14 @@ func Init(dbPath string) error {
 	if err != nil {
 		return err
 	}
-	defer db.Close()
 
 	fn := func(tx *bolt.Tx) error {
 		_, err := tx.CreateBucketIfNotExists(taskBucket)
 		return err
 	}
+	//defer close is causing issues, closing the DB at end of init function so it will be closed before you Create tasks can be ran
+	//No tasks are being added to bucket
+	//defer db.Close()
 	return db.Update(fn)
 }
 
@@ -61,7 +63,6 @@ func ViewList() ([]Task, error) {
 	var result []Task
 	db.View(func(tx *bolt.Tx) error {
 		b := tx.Bucket(taskBucket)
-
 		c := b.Cursor()
 		for k, v := c.First(); k != nil; k, v = c.Next() {
 			task := Task{
