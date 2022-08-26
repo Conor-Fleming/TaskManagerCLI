@@ -1,8 +1,7 @@
 package cmd
 
 import (
-	"fmt"
-
+	"github.com/Conor-Fleming/TaskManagerCLI/database"
 	"github.com/spf13/cobra"
 )
 
@@ -11,7 +10,8 @@ var listCmd = &cobra.Command{
 	Use:   "list",
 	Short: "View a list of task to be completed",
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("list called, this is a fake \"list\" command")
+		//fmt.Println("list called, this is a fake \"list\" command")
+		database.ViewList()
 	},
 }
 

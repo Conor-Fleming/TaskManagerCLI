@@ -2,7 +2,7 @@ package database
 
 import (
 	"encoding/binary"
-	"encoding/json"
+	"fmt"
 	"time"
 
 	"github.com/boltdb/bolt"
@@ -32,24 +32,19 @@ func Init(dbPath string) error {
 	return db.Update(fn)
 }
 
-func CreateTask(task *Task) (int, error) {
+func CreateTask(task string) (int, error) {
+	var id int
 	err := db.Update(func(tx *bolt.Tx) error {
 		b := tx.Bucket(taskBucket)
 		//Generating the key for the user
 		key, _ := b.NextSequence()
-		task.Key = int(key)
-
-		buf, err := json.Marshal(task)
-		if err != nil {
-			return err
-		}
-
-		return b.Put(itob(task.Key), buf)
+		id = int(key)
+		return b.Put(itob(id), []byte(task))
 	})
 	if err != nil {
-		return 0, err
+		return -1, err
 	}
-	return 0, nil
+	return id, nil
 }
 
 func itob(v int) []byte {
@@ -58,9 +53,23 @@ func itob(v int) []byte {
 	return b
 }
 
-/*
-func ViewList() {
+func btoi(b []byte) int {
+	return int(binary.BigEndian.Uint64(b))
+}
+
+func ViewList() ([]Task, error) {
+	//var result []Task
 	db.View(func(tx *bolt.Tx) error {
 		b := tx.Bucket(taskBucket)
+		if b == nil {
+			return fmt.Errorf("Bucket %s not found", taskBucket)
+		}
+
+		c := b.Cursor()
+		for k, v := c.First(); k != nil; k, v = c.Next() {
+			fmt.Printf("key = %s, value = %s\n", k, v)
+		}
+
+		return nil
 	})
-}*/
+}
