@@ -12,11 +12,11 @@ var listCmd = &cobra.Command{
 	Use:   "list",
 	Short: "View a list of task to be completed",
 	Run: func(cmd *cobra.Command, args []string) {
-		//fmt.Println("list called, this is a fake \"list\" command")
-		list, _ := database.ViewList()
-		for _, v := range list {
-			fmt.Printf(v.Value, " ")
+		list, err := database.ViewList()
+		if err != nil {
+			fmt.Println(err)
 		}
+		fmt.Println(list)
 	},
 }
 
