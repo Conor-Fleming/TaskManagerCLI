@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/Conor-Fleming/TaskManagerCLI/database"
 	"github.com/spf13/cobra"
 )
 
@@ -13,8 +14,9 @@ var addCmd = &cobra.Command{
 	Short: "Use add to add a new task to the TODO list",
 	Run: func(cmd *cobra.Command, args []string) {
 		task := strings.Join(args, " ")
-		fmt.Printf("Placeholder add command called, \"%s\" was added to your list.", task)
-
+		newTask := &database.Task{}
+		database.CreateTask(newTask)
+		fmt.Printf("Add command called, \"%s\" was added to your list.", task)
 	},
 }
 

@@ -1,6 +1,8 @@
 package database
 
 import (
+	"encoding/binary"
+	"encoding/json"
 	"time"
 
 	"github.com/boltdb/bolt"
@@ -33,17 +35,27 @@ func Init(dbPath string) error {
 func CreateTask(task *Task) (int, error) {
 	err := db.Update(func(tx *bolt.Tx) error {
 		b := tx.Bucket(taskBucket)
-
 		//Generating the key for the user
 		key, _ := b.NextSequence()
 		task.Key = int(key)
 
-		return b.Put([]byte(task.Key), []byte(task))
+		buf, err := json.Marshal(task)
+		if err != nil {
+			return err
+		}
+
+		return b.Put(itob(task.Key), buf)
 	})
 	if err != nil {
 		return 0, err
 	}
 	return 0, nil
+}
+
+func itob(v int) []byte {
+	b := make([]byte, 8)
+	binary.BigEndian.PutUint64(b, uint64(v))
+	return b
 }
 
 /*
