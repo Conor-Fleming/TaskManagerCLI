@@ -14,8 +14,7 @@ var addCmd = &cobra.Command{
 	Short: "Use add to add a new task to the TODO list",
 	Run: func(cmd *cobra.Command, args []string) {
 		task := strings.Join(args, " ")
-		newTask := &database.Task{}
-		database.CreateTask(newTask)
+		database.ViewList()
 		fmt.Printf("Add command called, \"%s\" was added to your list.", task)
 	},
 }

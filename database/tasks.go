@@ -58,18 +58,20 @@ func btoi(b []byte) int {
 }
 
 func ViewList() ([]Task, error) {
-	//var result []Task
+	var result []Task
 	db.View(func(tx *bolt.Tx) error {
 		b := tx.Bucket(taskBucket)
-		if b == nil {
-			return fmt.Errorf("Bucket %s not found", taskBucket)
-		}
 
 		c := b.Cursor()
 		for k, v := c.First(); k != nil; k, v = c.Next() {
+			task := Task{
+				Key:   btoi(k),
+				Value: string(v),
+			}
 			fmt.Printf("key = %s, value = %s\n", k, v)
+			result = append(result, task)
 		}
-
 		return nil
 	})
+	return result, nil
 }
