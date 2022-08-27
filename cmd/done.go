@@ -2,8 +2,10 @@ package cmd
 
 import (
 	"fmt"
+	"strconv"
 	"strings"
 
+	"github.com/Conor-Fleming/TaskManagerCLI/database"
 	"github.com/spf13/cobra"
 )
 
@@ -13,7 +15,13 @@ var doneCmd = &cobra.Command{
 	Short: "Use done to mark a task as complete and remove from the list",
 	Run: func(cmd *cobra.Command, args []string) {
 		done := strings.Join(args, " ")
-		fmt.Printf("Done command has been called, \"%s\" will be removed from the list", done)
+		taskID, _ := strconv.Atoi(done)
+		result, err := database.RemoveTask(int(taskID))
+		if err != nil {
+			fmt.Println(err)
+		}
+		fmt.Println(result)
+		fmt.Printf("Done command has been called, task %v: %v will be removed from the list\n", result, placeholder value)
 	},
 }
 
