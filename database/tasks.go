@@ -33,6 +33,17 @@ func Init(dbPath string) error {
 	return db.Update(fn)
 }
 
+func RemoveTask(task string) error {
+	err := db.Update(func(tx *bolt.Tx) error {
+		b := tx.Bucket(taskBucket)
+		//for _, b := range b{
+
+		//}
+		return nil
+	})
+	return nil
+}
+
 func CreateTask(task string) (int, error) {
 	var id int
 	err := db.Update(func(tx *bolt.Tx) error {
