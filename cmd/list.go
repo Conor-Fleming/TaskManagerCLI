@@ -17,7 +17,7 @@ var listCmd = &cobra.Command{
 			fmt.Println(err)
 		}
 		for _, v := range list {
-			fmt.Println(v.Value)
+			fmt.Printf("%v: %s\n", v.Key, v.Value)
 		}
 	},
 }
