@@ -16,7 +16,9 @@ var listCmd = &cobra.Command{
 		if err != nil {
 			fmt.Println(err)
 		}
-		fmt.Println(list)
+		for _, v := range list {
+			fmt.Println(v.Value)
+		}
 	},
 }
 

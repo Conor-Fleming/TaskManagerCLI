@@ -2,7 +2,6 @@ package database
 
 import (
 	"encoding/binary"
-	"fmt"
 	"time"
 
 	"github.com/boltdb/bolt"
@@ -69,7 +68,6 @@ func ViewList() ([]Task, error) {
 				Key:   btoi(k),
 				Value: string(v),
 			}
-			fmt.Printf("key = %s, value = %s\n", k, v)
 			result = append(result, task)
 		}
 		return nil

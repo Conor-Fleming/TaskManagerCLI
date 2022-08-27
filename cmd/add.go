@@ -19,7 +19,7 @@ var addCmd = &cobra.Command{
 			fmt.Println("error creating task and adding to list: ", err)
 			return
 		}
-		fmt.Printf("Add command called, \"%s\" was added to your list. Its ID is: %v", task, id)
+		fmt.Printf("Add command called, \"%s\" was added to your list. Its ID is: %v\n", task, id)
 	},
 }
 
