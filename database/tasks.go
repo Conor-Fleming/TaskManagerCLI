@@ -2,6 +2,7 @@ package database
 
 import (
 	"encoding/binary"
+	"fmt"
 	"time"
 
 	"github.com/boltdb/bolt"
@@ -27,9 +28,7 @@ func Init(dbPath string) error {
 		_, err := tx.CreateBucketIfNotExists(taskBucket)
 		return err
 	}
-	//defer close is causing issues, closing the DB at end of init function so it will be closed before you Create tasks can be ran
-	//No tasks are being added to bucket
-	//defer db.Close()
+
 	return db.Update(fn)
 }
 
@@ -86,4 +85,16 @@ func ViewList() ([]Task, error) {
 		return nil
 	})
 	return result, nil
+}
+
+func ViewTask(id int) string {
+	var task string
+	db.View(func(tx *bolt.Tx) error {
+		b := tx.Bucket(taskBucket)
+		v := b.Get(itob(id))
+		task = string(v)
+		fmt.Println("view task result", string(v))
+		return nil
+	})
+	return task
 }
