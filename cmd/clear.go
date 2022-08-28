@@ -1,33 +1,21 @@
 package cmd
 
 import (
-	"fmt"
-
 	"github.com/Conor-Fleming/TaskManagerCLI/database"
 	"github.com/spf13/cobra"
 )
 
 // listCmd represents the list command
-var listCmd = &cobra.Command{
-	Use:   "list",
-	Short: "View a list of task to be completed",
+var clearCmd = &cobra.Command{
+	Use:   "clear",
+	Short: "Remove all the tasks from the list",
 	Run: func(cmd *cobra.Command, args []string) {
-		list, err := database.ViewList()
-		if err != nil {
-			fmt.Println(err)
-		}
-		if len(list) < 1 {
-			fmt.Println("There are no tasks on the list")
-		} else {
-			for _, v := range list {
-				fmt.Printf("%v: %s\n", v.Key, v.Value)
-			}
-		}
+		database.Clearlist()
 	},
 }
 
 func init() {
-	rootCmd.AddCommand(listCmd)
+	rootCmd.AddCommand(clearCmd)
 
 	// Here you will define your flags and configuration settings.
 

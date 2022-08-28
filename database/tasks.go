@@ -2,7 +2,6 @@ package database
 
 import (
 	"encoding/binary"
-	"fmt"
 	"time"
 
 	"github.com/boltdb/bolt"
@@ -30,6 +29,24 @@ func Init(dbPath string) error {
 	}
 
 	return db.Update(fn)
+}
+
+func Clearlist() error {
+	err := db.Update(func(tx *bolt.Tx) error {
+		b := tx.Bucket(taskBucket)
+		c := b.Cursor()
+		for k, _ := c.First(); k != nil; k, _ = c.Next() {
+			_, err := RemoveTask(btoi(k))
+			if err != nil {
+				return err
+			}
+		}
+		return nil
+	})
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 func RemoveTask(id int) (int, error) {
@@ -93,7 +110,6 @@ func ViewTask(id int) string {
 		b := tx.Bucket(taskBucket)
 		v := b.Get(itob(id))
 		task = string(v)
-		fmt.Println("view task result", string(v))
 		return nil
 	})
 	return task
