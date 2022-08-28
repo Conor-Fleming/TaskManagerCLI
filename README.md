@@ -2,6 +2,7 @@
 
 ## About
 Task Manager CLI is a tool that can help you keep track of your tasks. This tool utilizes Cobra to help with the command line interface and taking arguments. It also uses BoltDB to handle the storing of tasks.
+
 *Project status: Working/In Progress
 
 ## Installation and Use
