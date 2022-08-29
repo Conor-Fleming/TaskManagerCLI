@@ -31,17 +31,10 @@ func Init(dbPath string) error {
 	return db.Update(fn)
 }
 
-func Clearlist() error {
+func DoneTask(id int) error {
 	err := db.Update(func(tx *bolt.Tx) error {
 		b := tx.Bucket(taskBucket)
-		c := b.Cursor()
-		for k, _ := c.First(); k != nil; k, _ = c.Next() {
-			_, err := RemoveTask(btoi(k))
-			if err != nil {
-				return err
-			}
-		}
-		return nil
+		return b.Put(itob(id), []byte("**DONE**"))
 	})
 	if err != nil {
 		return err

@@ -19,8 +19,8 @@ var listCmd = &cobra.Command{
 		if len(list) < 1 {
 			fmt.Println("There are no tasks on the list")
 		} else {
-			for _, v := range list {
-				fmt.Printf("%v: %s\n", v.Key, v.Value)
+			for i, v := range list {
+				fmt.Printf("%v) %s - ID(%v)\n", i+1, v.Value, v.Key)
 			}
 		}
 	},

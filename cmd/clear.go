@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"github.com/Conor-Fleming/TaskManagerCLI/database"
 	"github.com/spf13/cobra"
 )
 
@@ -10,7 +9,7 @@ var clearCmd = &cobra.Command{
 	Use:   "clear",
 	Short: "Remove all the tasks from the list",
 	Run: func(cmd *cobra.Command, args []string) {
-		database.Clearlist()
+		//database.Clearlist()
 	},
 }
 

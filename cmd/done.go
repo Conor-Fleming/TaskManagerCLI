@@ -17,11 +17,11 @@ var doneCmd = &cobra.Command{
 		done := strings.Join(args, " ")
 		taskID, _ := strconv.Atoi(done)
 		task := database.ViewTask(taskID)
-		result, err := database.RemoveTask(int(taskID))
+		err := database.DoneTask(int(taskID))
 		if err != nil {
 			fmt.Println(err)
 		}
-		fmt.Printf("Done command called, task %v: \"%v\" will be removed from the list\n", result, task)
+		fmt.Printf("Done command called, task \"%v\" will be marked as done.\n", task)
 	},
 }
 
