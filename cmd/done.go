@@ -21,7 +21,7 @@ var doneCmd = &cobra.Command{
 		if err != nil {
 			fmt.Println(err)
 		}
-		fmt.Printf("Done command called, task \"%v\" will be marked as done.\n", task)
+		fmt.Printf("Done command called, task \"%v\" will be marked as done.\n\nUse command 'rm' to remove it from the list.\n", task)
 	},
 }
 

@@ -1,20 +1,32 @@
 package cmd
 
 import (
+	"fmt"
+	"strconv"
+	"strings"
+
+	"github.com/Conor-Fleming/TaskManagerCLI/database"
 	"github.com/spf13/cobra"
 )
 
 // listCmd represents the list command
-var clearCmd = &cobra.Command{
-	Use:   "clear",
+var rmCmd = &cobra.Command{
+	Use:   "rm",
 	Short: "Remove all the tasks from the list",
 	Run: func(cmd *cobra.Command, args []string) {
-		//database.Clearlist()
+		done := strings.Join(args, " ")
+		taskID, _ := strconv.Atoi(done)
+		task := database.ViewTask(taskID)
+		_, err := database.RemoveTask(int(taskID))
+		if err != nil {
+			fmt.Println(err)
+		}
+		fmt.Printf("Remove command called, task \"%v\" will be removed.\n", strings.TrimSuffix(task, " - DONE"))
 	},
 }
 
 func init() {
-	rootCmd.AddCommand(clearCmd)
+	rootCmd.AddCommand(rmCmd)
 
 	// Here you will define your flags and configuration settings.
 

@@ -32,9 +32,10 @@ func Init(dbPath string) error {
 }
 
 func DoneTask(id int) error {
+	task := ViewTask(id)
 	err := db.Update(func(tx *bolt.Tx) error {
 		b := tx.Bucket(taskBucket)
-		return b.Put(itob(id), []byte("**DONE**"))
+		return b.Put(itob(id), []byte(task+" - DONE"))
 	})
 	if err != nil {
 		return err
