@@ -10,7 +10,7 @@ import (
 // listCmd represents the list command
 var listCmd = &cobra.Command{
 	Use:   "list",
-	Short: "View a list of task to be completed",
+	Short: "View your list of tasks to be completed",
 	Run: func(cmd *cobra.Command, args []string) {
 		list, err := database.ViewList()
 		if err != nil {

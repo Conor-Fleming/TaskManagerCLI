@@ -12,7 +12,7 @@ import (
 // listCmd represents the list command
 var rmCmd = &cobra.Command{
 	Use:   "rm",
-	Short: "Remove all the tasks from the list",
+	Short: "The rm command will remove the task from the list",
 	Run: func(cmd *cobra.Command, args []string) {
 		done := strings.Join(args, " ")
 		taskID, _ := strconv.Atoi(done)

@@ -12,7 +12,7 @@ import (
 // doneCmd represents the done command
 var doneCmd = &cobra.Command{
 	Use:   "done",
-	Short: "Use done to mark a task as complete and remove from the list",
+	Short: "Use done to mark a task as complete",
 	Run: func(cmd *cobra.Command, args []string) {
 		done := strings.Join(args, " ")
 		taskID, _ := strconv.Atoi(done)
