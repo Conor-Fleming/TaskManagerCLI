@@ -1,5 +1,7 @@
 # TaskManagerCLI
 
+[![Go Report Card](https://goreportcard.com/badge/github.com/Conor-Fleming/TaskManagerCLI)](https://goreportcard.com/report/github.com/Conor-Fleming/TaskManagerCLI)
+
 ## About
 Task Manager CLI is a tool that can help you keep track of your tasks. This tool utilizes Cobra to help with the command line interface and taking arguments. It also uses BoltDB to handle the storing of tasks.
 
